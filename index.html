@@ -2,16 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css"/>
     <script src="https://js.arcgis.com/4.29/"></script>
-    <title>نظام الملاحة الذكي - تتبع لحظي مع توجيه صوتي ذكي</title>
+    <title>نظام الملاحة الذكي</title>
     <style>
         /* ============================================
            نظام الملاحة الذكي - تصميم عصري متكامل
-           مع تحسين شكل القائمة السفلية على التلفون
-           ============================================ */
+        ============================================ */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +21,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            font-family: 'Segoe UI', 'Tajawal', 'Cairo', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', 'Cairo', 'Tajawal', system-ui, sans-serif;
             background: #0a0e1a;
         }
 
@@ -35,48 +33,36 @@
             --accent: #f39c12;
             --accent-dark: #e67e22;
             --success: #27ae60;
+            --success-dark: #1e8449;
             --danger: #e74c3c;
+            --danger-dark: #c0392b;
             --purple: #8e44ad;
             --purple-dark: #6c3483;
             --dark: #1a1f2e;
-            --dark-glass: rgba(26, 31, 46, 0.88);
             --light: #f8f9fc;
             --gray: #6c757d;
             --gray-light: #e9ecef;
             --white: #ffffff;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
-            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.2);
-            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.25);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.2);
+            --shadow-xl: 0 20px 50px rgba(0,0,0,0.25);
             --radius-sm: 8px;
             --radius-md: 14px;
             --radius-lg: 24px;
             --radius-xl: 32px;
             --radius-full: 9999px;
-
-            --space-xs: clamp(4px, 1.5vw, 8px);
-            --space-sm: clamp(8px, 2.5vw, 12px);
-            --space-md: clamp(12px, 3.5vw, 18px);
-            --space-lg: clamp(16px, 4.5vw, 24px);
-            --space-xl: clamp(20px, 5.5vw, 32px);
-
-            --font-xs: clamp(10px, 2.5vw, 11px);
-            --font-sm: clamp(11px, 3vw, 13px);
-            --font-md: clamp(13px, 3.5vw, 15px);
-            --font-lg: clamp(15px, 4vw, 17px);
-            --font-xl: clamp(18px, 5vw, 22px);
-            --font-2xl: clamp(22px, 6vw, 28px);
         }
 
-        /* ========== زر القائمة الرئيسي ========== */
+        /* ========== زر القائمة الرئيسي (ديسكتوب فقط) ========== */
         #toggle-main-panel {
-            background: rgba(255, 255, 255, 0.96);
+            background: rgba(255,255,255,0.96);
             backdrop-filter: blur(10px);
             color: var(--primary);
-            border: none;
-            width: clamp(46px, 10vw, 54px);
-            height: clamp(46px, 10vw, 54px);
-            font-size: clamp(24px, 6vw, 28px);
+            border: 1px solid rgba(43,126,143,0.2);
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
             cursor: pointer;
             box-shadow: var(--shadow-lg);
             display: flex;
@@ -85,33 +71,32 @@
             border-radius: var(--radius-md);
             transition: all 0.3s ease;
             font-weight: 600;
-            border: 1px solid rgba(43, 126, 143, 0.2);
-            position: absolute;
-            top: var(--space-md);
-            left: var(--space-md);
-            z-index: 60;
         }
 
-        /* ========== القائمة الجانبية (للشاشات الكبيرة) ========== */
+        #toggle-main-panel:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ========== القائمة الجانبية (ديسكتوب) ========== */
         .left-panel {
             position: absolute;
-            top: var(--space-md);
-            left: calc(70px + var(--space-sm));
+            top: 14px;
+            left: calc(70px + 10px);
             z-index: 60;
             display: flex;
             flex-direction: column;
-            gap: var(--space-md);
-            background: rgba(255, 255, 255, 0.98);
+            gap: 14px;
+            background: rgba(255,255,255,0.98);
             backdrop-filter: blur(20px);
-            padding: var(--space-lg);
+            padding: 20px;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-xl);
-            width: min(420px, calc(100vw - 100px));
-            max-width: 92vw;
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.3s;
+            width: min(400px, calc(100vw - 100px));
             max-height: 88vh;
             overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: transform 0.4s cubic-bezier(0.2,0.9,0.4,1.1), opacity 0.3s;
         }
 
         .left-panel.hidden {
@@ -120,112 +105,30 @@
             pointer-events: none;
         }
 
-        /* ========== القائمة السفلية للهواتف (تصميم عصري وجذاب) ========== */
-        @media (max-width: 768px) {
-            .left-panel {
-                position: fixed;
-                top: auto;
-                bottom: -100%;
-                left: 0;
-                right: 0;
-                width: 100%;
-                max-width: 100%;
-                border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(25px);
-                padding: var(--space-lg);
-                max-height: 65vh;
-                transition: bottom 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-                box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
-                border-top: 1px solid rgba(255, 255, 255, 0.5);
-            }
+        /* scrollbar */
+        .left-panel::-webkit-scrollbar { width: 5px; }
+        .left-panel::-webkit-scrollbar-track { background: var(--gray-light); border-radius: var(--radius-full); }
+        .left-panel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: var(--radius-full); }
 
-            .left-panel:not(.hidden) {
-                bottom: 0;
-                transform: none;
-            }
-
-            .left-panel.hidden {
-                bottom: -100%;
-                transform: none;
-                opacity: 1;
-            }
-
-            /* شريط السحب أعلى القائمة السفلية */
-            .left-panel::before {
-                content: "";
-                position: absolute;
-                top: 12px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 60px;
-                height: 5px;
-                background: var(--gray-light);
-                border-radius: var(--radius-full);
-            }
-
-            #toggle-main-panel {
-                top: auto;
-                bottom: 20px;
-                left: 20px;
-                z-index: 65;
-                background: var(--primary);
-                color: white;
-                box-shadow: var(--shadow-lg);
-            }
-
-            #toggle-main-panel:hover {
-                background: var(--primary-dark);
-            }
-        }
-
-        /* ========== شريط معلومات المسار (تصميم عصري وجذاب) ========== */
+        /* ========== شريط معلومات المسار ========== */
         #route-info-bar {
             display: none;
             position: fixed;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 2000;
-            background: linear-gradient(135deg, rgba(26, 31, 46, 0.95) 0%, rgba(20, 25, 40, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(26,31,46,0.95) 0%, rgba(20,25,40,0.95) 100%);
             backdrop-filter: blur(20px);
-            padding: clamp(12px, 3vh, 16px) clamp(20px, 5vw, 32px);
+            padding: 12px 28px;
             border-radius: var(--radius-full);
             box-shadow: var(--shadow-xl);
             align-items: center;
-            gap: clamp(16px, 4vw, 32px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: auto;
+            gap: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
             max-width: 94vw;
             flex-wrap: wrap;
             justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        /* على الشاشات الكبيرة: الشريط في الأعلى */
-        @media (min-width: 769px) {
-            #route-info-bar {
-                top: 20px;
-                bottom: auto;
-            }
-        }
-
-        /* على الهواتف: الشريط في الأسفل فوق القائمة */
-        @media (max-width: 768px) {
-            #route-info-bar {
-                bottom: auto;
-                top: auto;
-                bottom: calc(65vh + 20px);
-                background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 25, 40, 0.95) 100%);
-                padding: 12px 20px;
-                gap: 12px;
-                border-radius: 40px;
-            }
-
-            /* عندما القائمة مخفية، الشريط ينزل للأسفل */
-            .left-panel.hidden ~ #route-info-bar,
-            body:has(.left-panel.hidden) #route-info-bar {
-                bottom: 20px;
-            }
         }
 
         .info-item {
@@ -233,23 +136,20 @@
             flex-direction: column;
             align-items: center;
             min-width: 70px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255,255,255,0.08);
             padding: 6px 12px;
             border-radius: 40px;
-            backdrop-filter: blur(4px);
         }
 
         .info-label {
-            font-size: var(--font-xs);
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
             font-weight: 500;
         }
 
         .info-value {
             font-weight: 800;
-            font-size: var(--font-xl);
+            font-size: 20px;
             background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
             background-clip: text;
             -webkit-background-clip: text;
@@ -265,7 +165,7 @@
         }
 
         #next-direction {
-            font-size: var(--font-sm);
+            font-size: 13px;
             max-width: 200px;
             white-space: nowrap;
             overflow: hidden;
@@ -276,11 +176,11 @@
             -webkit-text-fill-color: var(--accent);
         }
 
-        /* ========== الأزرار العلوية الثلاثة ========== */
+        /* ========== الأزرار العلوية اليمين ========== */
         .right-panel {
             position: absolute;
-            top: var(--space-md);
-            right: var(--space-md);
+            top: 14px;
+            right: 14px;
             z-index: 50;
             display: flex;
             flex-direction: column;
@@ -291,12 +191,12 @@
         .right-panel button {
             backdrop-filter: blur(12px);
             border: none;
-            padding: clamp(10px, 3vw, 14px) clamp(18px, 4.5vw, 24px);
+            padding: 11px 20px;
             border-radius: var(--radius-full);
-            font-size: var(--font-md);
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.3s ease;
             box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
@@ -321,22 +221,19 @@
         }
         #toggle-layer-list:hover { transform: translateX(-5px) scale(1.02); }
 
-        /* ========== حقل البحث ========== */
-        #searchStart, #searchEnd {
-            width: 100%;
-        }
-        .esri-search {
-            box-shadow: var(--shadow-sm) !important;
-            border-radius: var(--radius-md) !important;
-            border: 1px solid var(--gray-light) !important;
+        #layer-ui, #layer-list-container {
+            background: rgba(255,255,255,0.98);
+            border-radius: var(--radius-md);
+            padding: 8px;
+            margin-top: 4px;
+            width: min(280px, 72vw);
         }
 
-        /* ========== مجموعة الأزرار ========== */
+        /* ========== مجموعة الأزرار الداخلية ========== */
         .btn-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-sm);
-            margin-top: var(--space-xs);
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
         }
 
         .btn-group button {
@@ -344,8 +241,8 @@
             font-weight: 600;
             border: none;
             border-radius: var(--radius-md);
-            padding: clamp(12px, 3.8vw, 15px) clamp(10px, 2.5vw, 14px);
-            font-size: var(--font-md);
+            padding: 13px 12px;
+            font-size: 13px;
             transition: all 0.25s ease;
             background: var(--gray-light);
             color: var(--dark);
@@ -363,29 +260,38 @@
         #track-btn:disabled {
             background: linear-gradient(135deg, #b0bec5 0%, #90a4ae 100%);
             color: #546e7a;
+            cursor: not-allowed;
         }
         #track-btn.active {
             background: linear-gradient(135deg, var(--accent-dark) 0%, #d35400 100%);
             animation: pulseGlow 1.2s infinite;
         }
         #manual-btn {
-            background: linear-gradient(135deg, var(--success) 0%, #1e8449 100%);
+            background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
             color: white;
         }
         #manual-btn.active {
             background: linear-gradient(135deg, var(--danger) 0%, var(--danger-dark) 100%);
         }
+        #clear-btn {
+            background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
+            color: white;
+        }
+        #gallary {
+            background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);
+            color: white;
+        }
 
         @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.5); }
-            70% { box-shadow: 0 0 0 8px rgba(243, 156, 18, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(243, 156, 18, 0); }
+            0%   { box-shadow: 0 0 0 0 rgba(243,156,18,0.5); }
+            70%  { box-shadow: 0 0 0 8px rgba(243,156,18,0); }
+            100% { box-shadow: 0 0 0 0 rgba(243,156,18,0); }
         }
 
         #track-status {
-            font-size: var(--font-sm);
+            font-size: 12px;
             background: linear-gradient(135deg, #fff8e7 0%, #fff3e0 100%);
-            padding: var(--space-sm) var(--space-md);
+            padding: 10px 16px;
             border-radius: var(--radius-full);
             text-align: center;
             color: var(--accent-dark);
@@ -393,23 +299,23 @@
             font-weight: 600;
         }
 
-        /* ========== خطوات الطريق (تصميم عصري ومقروء) ========== */
+        /* ========== خطوات الطريق ========== */
         #directions-list {
-            margin-top: var(--space-md);
-            max-height: 250px;
+            margin-top: 14px;
+            max-height: 240px;
             overflow-y: auto;
             background: linear-gradient(135deg, #f8f9ff 0%, #f0f2f8 100%);
             border-radius: var(--radius-lg);
-            padding: var(--space-md);
+            padding: 14px;
             border-right: 4px solid var(--primary);
             box-shadow: var(--shadow-sm);
         }
 
         #directions-list strong {
             color: var(--primary-dark);
-            font-size: var(--font-lg);
+            font-size: 14px;
             display: block;
-            margin-bottom: var(--space-sm);
+            margin-bottom: 10px;
             padding-bottom: 8px;
             border-bottom: 2px solid var(--primary-light);
         }
@@ -421,99 +327,98 @@
         }
 
         #steps-ul li {
-            font-size: var(--font-md);
+            font-size: 13px;
             color: #2c3e44;
             line-height: 1.6;
-            margin-bottom: 10px;
-            padding: 12px 14px;
+            margin-bottom: 8px;
+            padding: 10px 12px;
             background: white;
             border-radius: var(--radius-md);
             border-right: 3px solid var(--primary-light);
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 12px;
-            word-break: break-word;
+            gap: 10px;
             cursor: pointer;
             box-shadow: var(--shadow-sm);
         }
 
-        #steps-ul li::before {
-            content: "📍";
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        #steps-ul li:hover {
-            background: var(--primary-light);
-            color: white;
-            transform: translateX(-4px);
-        }
-
-        #steps-ul li:hover::before {
-            content: "🔊";
-        }
+        #steps-ul li::before { content: "📍"; font-size: 16px; flex-shrink: 0; }
+        #steps-ul li:hover { background: var(--primary-light); color: white; transform: translateX(-4px); }
+        #steps-ul li:hover::before { content: "🔊"; }
 
         /* ========== المفضلات ========== */
         #favorites-section {
-            margin-top: var(--space-md);
+            margin-top: 14px;
             border-top: 2px solid var(--gray-light);
-            padding-top: var(--space-lg);
+            padding-top: 16px;
         }
 
         #favorites-section strong {
             color: var(--purple);
-            font-size: var(--font-lg);
+            font-size: 14px;
+        }
+
+        .fav-input-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         #fav-name {
             flex: 1;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border-radius: var(--radius-full);
             border: 1px solid var(--gray-light);
-            font-size: var(--font-md);
+            font-size: 13px;
             background: var(--white);
+            font-family: inherit;
         }
 
         #add-fav-btn {
             background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
             color: white;
             border: none;
-            padding: 0 20px;
+            padding: 0 18px;
             border-radius: var(--radius-full);
             font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            white-space: nowrap;
         }
+
+        #add-fav-btn:hover { opacity: 0.9; }
+
+        #fav-list { list-style: none; margin-top: 10px; }
 
         .fav-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--space-sm) var(--space-md);
+            padding: 8px 14px;
             background: var(--gray-light);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             border-radius: var(--radius-full);
             transition: all 0.2s;
         }
 
-        .fav-item:hover {
-            background: #e2e6ea;
-            transform: translateX(-3px);
-        }
+        .fav-item:hover { background: #dde2e6; transform: translateX(-3px); }
 
         .fav-name {
             cursor: pointer;
             color: var(--primary);
             font-weight: 600;
-            font-size: var(--font-md);
+            font-size: 13px;
             flex: 1;
         }
 
         .fav-delete {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
             color: var(--danger);
+            padding: 0 4px;
         }
 
         /* ========== نافذة المعلومات ========== */
@@ -522,7 +427,7 @@
             position: fixed;
             z-index: 3000;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0,0,0,0.85);
             backdrop-filter: blur(12px);
             align-items: center;
             justify-content: center;
@@ -530,332 +435,300 @@
 
         .modal-content {
             background: var(--white);
-            width: min(550px, 90vw);
-            padding: var(--space-xl);
+            width: min(520px, 92vw);
+            padding: 30px;
             border-radius: var(--radius-xl);
             max-height: 85vh;
             overflow-y: auto;
+            position: relative;
         }
 
+        .modal-content h3 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #0077b6;
+            margin-bottom: 16px;
+        }
+
+        .modal-content h4 {
+            color: var(--primary-dark);
+            margin: 14px 0 6px;
+        }
+
+        .modal-content p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            cursor: pointer;
+            color: var(--danger);
+            font-size: 28px;
+            line-height: 1;
+        }
+
+        /* ========== زر المعلومات ========== */
         #info-btn {
             position: absolute;
             bottom: 24px;
-            left: 24px;
+            right: 24px;
             z-index: 100;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
-            width: clamp(50px, 12vw, 58px);
-            height: clamp(50px, 12vw, 58px);
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
-            font-size: clamp(24px, 6vw, 30px);
+            font-size: 26px;
             cursor: pointer;
             box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
 
+        #info-btn:hover { transform: scale(1.1); }
+
+        /* ========== التوست ========== */
         .error-toast {
-            position: absolute;
-            bottom: 28%;
+            position: fixed;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--danger) 0%, var(--danger-dark) 100%);
+            background: linear-gradient(135deg, var(--dark) 0%, #2d3436 100%);
             color: white;
             padding: 12px 24px;
             border-radius: var(--radius-full);
-            font-size: var(--font-sm);
+            font-size: 13px;
             z-index: 5000;
             display: none;
             text-align: center;
-            max-width: 85vw;
+            max-width: 88vw;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
-        #layer-ui, #layer-list-container {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: var(--radius-md);
-            padding: var(--space-sm);
-            margin-top: 6px;
-            width: min(280px, 72vw);
-        }
+        /* ========== موبايل: القائمة العائمة ========== */
+        @media (max-width: 768px) {
 
-        /* تحسينات للهواتف الصغيرة */
-        @media (max-width: 480px) {
-            .left-panel {
-                padding: var(--space-md);
-                max-height: 60vh;
+            /* إخفاء عناصر الديسكتوب */
+            .left-panel { display: none !important; }
+            #toggle-main-panel { display: none !important; }
+
+            /* القائمة العائمة */
+            .mobile-float-menu {
+                position: fixed;
+                bottom: 22px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 200;
+                display: flex;
+                gap: 10px;
+                background: rgba(10,14,26,0.85);
+                backdrop-filter: blur(24px);
+                padding: 10px 16px;
+                border-radius: 60px;
+                border: 1px solid rgba(255,255,255,0.18);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+                align-items: center;
             }
 
-            .info-item {
-                min-width: 55px;
-                padding: 4px 8px;
+            .mob-btn {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 20px;
+                transition: all 0.2s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                user-select: none;
             }
 
-            .info-value {
-                font-size: 16px;
+            .mob-btn:active { transform: scale(0.88); }
+
+            #mobileStartBtn  { background: linear-gradient(135deg, #2b9348, #1e8449); }
+            #mobileEndBtn    { background: linear-gradient(135deg, #d00000, #900000); }
+            #mobileTrackBtn  { background: linear-gradient(135deg, #2b7e8f, #1a5f6e); width: 54px; height: 54px; font-size: 22px; box-shadow: 0 4px 18px rgba(43,126,143,0.5); }
+            #mobileTrackBtn.active { background: linear-gradient(135deg, #e67e22, #d35400); animation: pulseGlow 1s infinite; }
+            #mobileClearBtn  { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); }
+            #mobileFavBtn    { background: linear-gradient(135deg, #8e44ad, #6c3483); }
+            #mobileManualBtn { background: linear-gradient(135deg, #27ae60, #1e8449); }
+            #mobileManualBtn.active { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+            #mobileGalleryBtn { background: linear-gradient(135deg, #0984e3, #74b9ff); }
+            #mobileToggleBtn { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3); font-size: 16px; }
+
+            /* شريط الأزرار الثانوي للموبايل */
+            .mobile-secondary-menu {
+                position: fixed;
+                bottom: 84px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 199;
+                display: flex;
+                gap: 10px;
+                background: rgba(10,14,26,0.75);
+                backdrop-filter: blur(20px);
+                padding: 8px 14px;
+                border-radius: 50px;
+                border: 1px solid rgba(255,255,255,0.12);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+                align-items: center;
+                transition: all 0.3s ease;
             }
 
-            #steps-ul li {
-                font-size: 12px;
+            .mobile-secondary-menu.hidden-menu {
+                opacity: 0;
+                pointer-events: none;
+                transform: translateX(-50%) translateY(10px);
+            }
+
+            /* نافذة البوب اب */
+            .mobile-popup {
+                position: fixed;
+                bottom: 95px;
+                left: 50%;
+                transform: translateX(-50%) scale(0.9);
+                background: rgba(12,16,30,0.95);
+                backdrop-filter: blur(24px);
+                padding: 20px 18px 16px;
+                border-radius: 28px;
+                z-index: 300;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.25s ease;
+                width: 88vw;
+                max-width: 340px;
+                border: 1px solid rgba(255,255,255,0.15);
+                box-shadow: 0 -4px 30px rgba(0,0,0,0.4);
+            }
+
+            .mobile-popup.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) scale(1);
+            }
+
+            .popup-title {
+                color: rgba(255,255,255,0.9);
+                font-size: 13px;
+                font-weight: 700;
+                margin-bottom: 12px;
+                text-align: center;
+                letter-spacing: 0.5px;
+            }
+
+            #closePopup {
+                width: 100%;
+                margin-top: 12px;
                 padding: 10px;
+                border-radius: 50px;
+                background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+                color: white;
+                border: none;
+                font-weight: bold;
+                font-size: 13px;
+                cursor: pointer;
+                font-family: inherit;
             }
+
+            .fav-list-mobile {
+                max-height: 200px;
+                overflow-y: auto;
+                margin-top: 10px;
+            }
+
+            .fav-item-mobile {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 9px 12px;
+                background: rgba(255,255,255,0.1);
+                border-radius: 50px;
+                margin-bottom: 6px;
+                color: white;
+                font-size: 13px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .fav-item-mobile:hover { background: rgba(255,255,255,0.18); }
+
+            .fav-item-mobile .del-fav {
+                color: #ff6b6b;
+                cursor: pointer;
+                font-size: 16px;
+                padding: 0 4px;
+            }
+
+            /* شريط المعلومات على الموبايل */
+            #route-info-bar {
+                top: 14px;
+                bottom: auto;
+                padding: 8px 16px;
+                gap: 10px;
+                border-radius: 50px;
+            }
+
+            .info-item { min-width: 52px; padding: 4px 8px; }
+            .info-label { font-size: 9px; }
+            .info-value { font-size: 14px; }
+            #next-direction { font-size: 11px; max-width: 110px; }
+
+            /* أزرار اليمين على الموبايل */
+            .right-panel {
+                top: 10px;
+                right: 10px;
+                gap: 7px;
+            }
+
+            .right-panel button {
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+
+            /* زر المعلومات */
+            #info-btn {
+                bottom: 90px;
+                right: 16px;
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+                background: rgba(0,0,0,0.7);
+                backdrop-filter: blur(10px);
+            }
+
+            /* التوست */
+            .error-toast { bottom: 90px; }
         }
 
-        /* شريط التمرير المخصص */
-        .left-panel::-webkit-scrollbar {
-            width: 5px;
+        /* ========== شاشات صغيرة جداً ========== */
+        @media (max-width: 480px) {
+            .mobile-float-menu { gap: 7px; padding: 8px 13px; bottom: 16px; }
+            .mob-btn { width: 42px; height: 42px; font-size: 18px; }
+            #mobileTrackBtn { width: 48px; height: 48px; font-size: 20px; }
+            #route-info-bar { top: 10px; padding: 6px 12px; gap: 8px; }
+            .right-panel button { padding: 7px 10px; font-size: 10px; }
+            .mobile-secondary-menu { gap: 7px; padding: 7px 12px; bottom: 78px; }
         }
-        .left-panel::-webkit-scrollbar-track {
-            background: var(--gray-light);
-            border-radius: var(--radius-full);
-        }
-        .left-panel::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: var(--radius-full);
-        }
-        /* ========== تحسين القائمة السفلية للهواتف - أصغر وأجمل ========== */
-@media (max-width: 768px) {
-    .left-panel {
-        position: fixed;
-        top: auto;
-        bottom: -100%;
-        left: 0;
-        right: 0;
-        width: 100%;
-        max-width: 100%;
-        border-radius: 28px 28px 0 0;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(25px);
-        padding: 20px 18px 28px;
-        max-height: 52vh;
-        transition: bottom 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
-        border-top: 1px solid rgba(255, 255, 255, 0.6);
-    }
-
-    .left-panel:not(.hidden) {
-        bottom: 0;
-        transform: none;
-    }
-
-    .left-panel.hidden {
-        bottom: -100%;
-        transform: none;
-        opacity: 1;
-    }
-
-    /* شريط السحب الأنيق */
-    .left-panel::before {
-        content: "";
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 45px;
-        height: 4px;
-        background: #cbd5e1;
-        border-radius: 20px;
-    }
-
-    /* تقليل المسافات الداخلية */
-    .left-panel .btn-group {
-        gap: 8px;
-        margin-top: 4px;
-    }
-
-    .left-panel .btn-group button {
-        padding: 10px 8px;
-        font-size: 12px;
-    }
-
-    #searchStart, #searchEnd {
-        margin-bottom: 4px;
-    }
-
-    /* تقليل حجم الفافوريت */
-    #favorites-section {
-        margin-top: 12px;
-        padding-top: 12px;
-    }
-
-    .fav-item {
-        padding: 6px 12px;
-        margin-bottom: 5px;
-    }
-
-    .fav-name {
-        font-size: 12px;
-    }
-
-    /* تقليل حجم خطوات الطريق */
-    #directions-list {
-        max-height: 160px;
-        margin-top: 12px;
-        padding: 10px;
-    }
-
-    #steps-ul li {
-        padding: 8px 12px;
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-
-    #steps-ul li::before {
-        font-size: 14px;
-    }
-
-    /* تقليل التباعد العام */
-    .left-panel > *:not(:last-child) {
-        margin-bottom: 0;
-    }
-
-    /* تحسين موضع زر القائمة */
-    #toggle-main-panel {
-        top: auto;
-        bottom: 18px;
-        left: 18px;
-        width: 48px;
-        height: 48px;
-        font-size: 22px;
-        background: linear-gradient(135deg, #2b7e8f, #1a5f6e);
-        color: white;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-        z-index: 65;
-    }
-}
-
-/* ========== تحسين شريط المسافة والوقت ========== */
-@media (max-width: 768px) {
-    #route-info-bar {
-        bottom: auto;
-        top: auto;
-        bottom: calc(52vh + 12px);
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.92), rgba(20, 25, 40, 0.96));
-        padding: 8px 16px;
-        gap: 8px;
-        border-radius: 50px;
-        backdrop-filter: blur(20px);
-    }
-
-    /* لما القائمة تختفي، الشريط ينزل تحت */
-    .left-panel.hidden ~ #route-info-bar,
-    body:has(.left-panel.hidden) #route-info-bar {
-        bottom: 20px;
-    }
-
-    .info-item {
-        min-width: 55px;
-        padding: 4px 8px;
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 30px;
-    }
-
-    .info-label {
-        font-size: 9px;
-        letter-spacing: 0.3px;
-    }
-
-    .info-value {
-        font-size: 14px;
-        font-weight: 800;
-    }
-
-    #next-direction {
-        font-size: 10px;
-        max-width: 130px;
-    }
-}
-
-/* ========== تحسين المفضلة وخطوات الطريق بشكل عام ========== */
-#favorites-section {
-    margin-top: 16px;
-    border-top: 1px solid rgba(0,0,0,0.08);
-    padding-top: 14px;
-}
-
-#fav-name {
-    padding: 10px 14px;
-    font-size: 13px;
-    border-radius: 30px;
-}
-
-#add-fav-btn {
-    padding: 0 16px;
-    font-size: 13px;
-}
-
-#directions-list {
-    border-radius: 20px;
-    padding: 12px;
-    max-height: 200px;
-}
-
-#directions-list strong {
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-#steps-ul li {
-    padding: 10px 14px;
-    font-size: 13px;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-#steps-ul li:active {
-    transform: scale(0.98);
-    background: #e3f2fd;
-}
-
-/* ========== تحسين الأزرار العلوية للهواتف ========== */
-@media (max-width: 768px) {
-    .right-panel {
-        top: 12px;
-        right: 12px;
-        gap: 8px;
-    }
-
-    .right-panel button {
-        padding: 6px 12px;
-        font-size: 10px;
-        border-radius: 30px;
-    }
-
-    #fullscreen-btn, #toggle-layer-search, #toggle-layer-list {
-        padding: 6px 10px;
-        font-size: 10px;
-    }
-}
-
-/* ========== إضافة تأثيرات ناعمة ========== */
-.left-panel {
-    transition: bottom 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2), transform 0.3s;
-}
-
-#route-info-bar {
-    transition: bottom 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2), opacity 0.2s;
-}
-
-/* تحسين ظهور الأيقونات */
-.btn-group button i, .right-panel button i {
-    font-size: 1.1em;
-}
-
-/* جعل خطوات الطريق قابلة للقراءة بشكل أفضل */
-#steps-ul li:hover {
-    background: #e8f4f8;
-    transform: translateX(-3px);
-}
     </style>
 </head>
 <body>
+
+<!-- زر القائمة (ديسكتوب) -->
 <button id="toggle-main-panel" aria-label="القائمة">☰</button>
+
+<!-- زر المساعدة -->
 <button id="info-btn" aria-label="المساعدة">؟</button>
 
+<!-- شريط معلومات المسار -->
 <div id="route-info-bar">
     <div class="info-item">
         <span class="info-label">المسافة</span>
@@ -871,25 +744,29 @@
     </div>
 </div>
 
+<!-- التوست -->
 <div class="error-toast" id="errorToast"></div>
 
+<!-- نافذة المساعدة -->
 <div id="info-modal">
     <div class="modal-content">
-        <span class="close-modal" style="float:left; cursor:pointer; color:#ff4444; font-size:32px;">&times;</span>
-        <div style="font-size: 1.5rem; font-weight: bold; color: #0077b6;">📖 دليل التتبع الذكي</div>
+        <span class="close-modal">&times;</span>
+        <h3>📖 دليل التتبع الذكي</h3>
         <h4>📍 تحديد المسار</h4>
-        <p>• اكتب البداية والوجهة في حقول البحث</p>
+        <p>اكتب البداية والوجهة في حقول البحث، أو استخدم "تحديد يدوي" للضغط على الخريطة مباشرة.</p>
         <h4>🎯 التتبع الصوتي الحي</h4>
-        <p>• بعد ظهور المسار، اضغط "بدء التتبع الصوتي"<br> • العلامة الزرقاء تتحرك مع موقعك مع نطق التعليمات تلقائياً
-        </p>
+        <p>بعد ظهور المسار، اضغط "بدء التتبع". العلامة الزرقاء تتحرك مع موقعك وتنطق التعليمات تلقائياً عند كل منعطف.</p>
         <h4>⭐ المفضلات</h4>
-        <p>• بعد تحديد وجهة، اكتب اسمها واضغط حفظ</p>
+        <p>بعد تحديد وجهة، اكتب اسمها واضغط حفظ لاسترجاعها لاحقاً.</p>
+        <h4>📱 على الهاتف</h4>
+        <p>استخدم الأزرار في أسفل الشاشة للتنقل بين البداية والوجهة والمفضلات.</p>
     </div>
 </div>
 
+<!-- القائمة الجانبية (ديسكتوب) -->
 <div class="left-panel" id="mainPanel">
     <div id="searchStart"></div>
-    <div id="searchEnd" style="margin-top:5px;"></div>
+    <div id="searchEnd" style="margin-top:6px;"></div>
 
     <div class="btn-group">
         <button id="manual-btn">🎯 تحديد يدوي</button>
@@ -897,23 +774,25 @@
         <button id="clear-btn">🗑 مسح الكل</button>
         <button id="gallary">🗺 تغيير الخريطة</button>
     </div>
-    <div id="track-status">🟢 جارٍ التتبع... سيتم نطق التعليمات عند الوصول لكل منعطف</div>
+
+    <div id="track-status">🟢 جارٍ التتبع... سيتم نطق التعليمات عند كل منعطف</div>
 
     <div id="favorites-section">
         <strong>⭐ الأماكن المفضلة</strong>
-        <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+        <div class="fav-input-row">
             <input type="text" id="fav-name" placeholder="اسم المكان...">
-            <button id="add-fav-btn">حفظ</button>
+            <button id="add-fav-btn">💾 حفظ</button>
         </div>
-        <ul id="fav-list" style="list-style:none; margin-top:10px;"></ul>
+        <ul id="fav-list"></ul>
     </div>
 
-    <div id="directions-list">
-        <strong>📍 خطوات الطريق (اضغط على الخطوة لسماعها)</strong>
+    <div id="directions-list" style="display:none;">
+        <strong>📍 خطوات الطريق (اضغط للسماع)</strong>
         <ul id="steps-ul"></ul>
     </div>
 </div>
 
+<!-- الأزرار العلوية اليمين -->
 <div class="right-panel">
     <button id="fullscreen-btn">⛶ ملء الشاشة</button>
     <button id="toggle-layer-search">🔍 البحث</button>
@@ -926,229 +805,481 @@
     </div>
 </div>
 
+<!-- الخريطة -->
 <div id="mapdiv"></div>
 
 <script>
-    require([
-        "esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/BasemapGallery",
-        "esri/widgets/Locate", "esri/widgets/Home", "esri/widgets/Search",
-        "esri/rest/route", "esri/rest/support/RouteParameters", "esri/rest/support/FeatureSet",
-        "esri/Graphic", "esri/geometry/geometryEngine", "esri/widgets/LayerList",
-        "esri/geometry/Point"
-    ], (esriConfig, WebMap, MapView, BasemapGallery, Locate, Home, Search,
-        route, RouteParameters, FeatureSet, Graphic, geometryEngine, LayerList, Point) => {
+require([
+    "esri/config", "esri/WebMap", "esri/views/MapView", "esri/widgets/BasemapGallery",
+    "esri/widgets/Locate", "esri/widgets/Home", "esri/widgets/Search",
+    "esri/rest/route", "esri/rest/support/RouteParameters", "esri/rest/support/FeatureSet",
+    "esri/Graphic", "esri/geometry/geometryEngine", "esri/widgets/LayerList",
+    "esri/geometry/Point"
+], (esriConfig, WebMap, MapView, BasemapGallery, Locate, Home, Search,
+    route, RouteParameters, FeatureSet, Graphic, geometryEngine, LayerList, Point) => {
 
-        esriConfig.apiKey = "AAPTaRJLS6pe1lBACRAMsjSxHBA..7bS7zQ7ngX2n9cdHIZ1RANTl22C1zbg0joa3C0bTUkDboXbTZHCXJwoKLFhlkm6wir23pbD2R8bRSoUXdhwIOTXXc6xqq2pWUfMmstvEcMeDQQkwiJY2mcteSioiHLBM8CAL17SOL09BaK0RyufBaNCJ10h5canS2b-NtmoXohCJk1Dbf0Xllhxx_ZWFm3oMoU6eFCOjZFvxJHryUYW19NTIRUIoN7FresKLn8dLI5T1qVxRISRut8Y.AT1_OpK8AcUb";
+    esriConfig.apiKey = "AAPTaRJLS6pe1lBACRAMsjSxHBA..7bS7zQ7ngX2n9cdHIZ1RANTl22C1zbg0joa3C0bTUkDboXbTZHCXJwoKLFhlkm6wir23pbD2R8bRSoUXdhwIOTXXc6xqq2pWUfMmstvEcMeDQQkwiJY2mcteSioiHLBM8CAL17SOL09BaK0RyufBaNCJ10h5canS2b-NtmoXohCJk1Dbf0Xllhxx_ZWFm3oMoU6eFCOjZFvxJHryUYW19NTIRUIoN7FresKLn8dLI5T1qVxRISRut8Y.AT1_OpK8AcUb";
 
-        const myWebMap = new WebMap({ portalItem: { id: "9ed32b74ebed4f61852e172a38fcca16" } });
-        const myView = new MapView({ map: myWebMap, container: "mapdiv", center: [30.5, 28.5], zoom: 7 });
+    const myWebMap = new WebMap({ portalItem: { id: "9ed32b74ebed4f61852e172a38fcca16" } });
+    const myView = new MapView({ map: myWebMap, container: "mapdiv", center: [30.5, 28.5], zoom: 7 });
 
-        const toggleBtn = document.getElementById("toggle-main-panel");
-        myView.ui.add(toggleBtn, "top-left");
-        myView.ui.add(new Home({ view: myView }), "top-left");
-        myView.ui.add(new Locate({ view: myView }), "top-left");
+    const toggleBtn = document.getElementById("toggle-main-panel");
+    myView.ui.add(toggleBtn, "top-left");
+    myView.ui.add(new Home({ view: myView }), "top-left");
+    myView.ui.add(new Locate({ view: myView }), "top-left");
 
-        let startGraphic = null, endGraphic = null, routeDirections = [], activeRouteLine = null, routeGeometry = null;
-        let isManualMode = false, isTracking = false, currentLocationGraphic = null, lastSpokenStepIndex = -1, spokenSteps = new Set(), watchId = null;
+    let startGraphic = null, endGraphic = null, routeDirections = [], activeRouteLine = null, routeGeometry = null;
+    let isManualMode = false, isTracking = false, currentLocationGraphic = null;
+    let lastSpokenStepIndex = -1, spokenSteps = new Set(), watchId = null;
 
-        toggleBtn.onclick = () => {
-            const panel = document.getElementById("mainPanel");
-            panel.classList.toggle("hidden");
-            toggleBtn.innerText = panel.classList.contains("hidden") ? "☰" : "✕";
-        };
+    // فتح/إغلاق القائمة (ديسكتوب)
+    toggleBtn.onclick = () => {
+        const panel = document.getElementById("mainPanel");
+        panel.classList.toggle("hidden");
+        toggleBtn.innerText = panel.classList.contains("hidden") ? "☰" : "✕";
+    };
 
-        function showError(msg) { const toast = document.getElementById("errorToast"); toast.innerText = msg; toast.style.display = "block"; setTimeout(() => toast.style.display = "none", 3300); }
-        document.getElementById("fullscreen-btn").onclick = () => { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); };
+    // دالة إظهار رسائل التنبيه
+    function showError(msg) {
+        const toast = document.getElementById("errorToast");
+        toast.innerText = msg;
+        toast.style.display = "block";
+        setTimeout(() => toast.style.display = "none", 3300);
+    }
 
-        const sStart = new Search({ view: myView, container: "searchStart", popupEnabled: false, placeholder: "📍 نقطة البداية..." });
-        const sEnd = new Search({ view: myView, container: "searchEnd", popupEnabled: false, placeholder: "🎯 الوجهة..." });
-        const sLayer = new Search({ view: myView, container: "layerSearchBox", includeDefaultSources: false });
+    // ملء الشاشة
+    document.getElementById("fullscreen-btn").onclick = () => {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+    };
 
-        myWebMap.when(() => { const layerSources = myWebMap.layers.filter(l => l.type === "feature").map(layer => ({ layer, searchFields: ["Name"], displayField: "Name", exactMatch: false, outFields: ["*"], name: layer.title })).toArray(); sLayer.sources = layerSources; });
+    // حقول البحث (ديسكتوب)
+    const sStart = new Search({ view: myView, container: "searchStart", popupEnabled: false, placeholder: "📍 نقطة البداية..." });
+    const sEnd   = new Search({ view: myView, container: "searchEnd",   popupEnabled: false, placeholder: "🎯 الوجهة..." });
+    const sLayer = new Search({ view: myView, container: "layerSearchBox", includeDefaultSources: false });
 
-        sStart.on("select-result", (e) => setPoint("start", e.result.feature.geometry));
-        sEnd.on("select-result", (e) => setPoint("end", e.result.feature.geometry));
+    myWebMap.when(() => {
+        const layerSources = myWebMap.layers.filter(l => l.type === "feature").map(layer => ({
+            layer, searchFields: ["Name"], displayField: "Name", exactMatch: false, outFields: ["*"], name: layer.title
+        })).toArray();
+        sLayer.sources = layerSources;
+    });
 
-        function setPoint(type, geometry) {
-            const graphic = new Graphic({ geometry, symbol: { type: "simple-marker", color: (type === "start" ? "#2b9348" : "#d00000"), size: "14px", outline: { color: "white", width: 2 } } });
-            if (type === "start") { if (startGraphic) myView.graphics.remove(startGraphic); startGraphic = graphic; }
-            else { if (endGraphic) myView.graphics.remove(endGraphic); endGraphic = graphic; }
-            myView.graphics.add(graphic);
-            if (startGraphic && endGraphic) solveRoute();
-        }
+    sStart.on("select-result", e => setPoint("start", e.result.feature.geometry));
+    sEnd.on("select-result",   e => setPoint("end",   e.result.feature.geometry));
 
-        function createLocationMarker(geometry) {
-            if (currentLocationGraphic) myView.graphics.remove(currentLocationGraphic);
-            currentLocationGraphic = new Graphic({ geometry, symbol: { type: "simple-marker", color: [0, 110, 220, 0.95], size: "22px", outline: { color: "white", width: 3 }, style: "circle" } });
-            myView.graphics.add(currentLocationGraphic);
-        }
+    function setPoint(type, geometry) {
+        const color = type === "start" ? "#2b9348" : "#d00000";
+        const graphic = new Graphic({ geometry, symbol: { type: "simple-marker", color, size: "14px", outline: { color: "white", width: 2 } } });
+        if (type === "start") { if (startGraphic) myView.graphics.remove(startGraphic); startGraphic = graphic; }
+        else                  { if (endGraphic)   myView.graphics.remove(endGraphic);   endGraphic   = graphic; }
+        myView.graphics.add(graphic);
+        if (startGraphic && endGraphic) solveRoute();
+    }
 
-        function getDistanceToRoute(userPoint) { if (!routeGeometry) return Infinity; try { return geometryEngine.distance(userPoint, routeGeometry, "meters"); } catch(e) { return Infinity; } }
-        function getCurrentStepIndex(userPoint) { if (!routeDirections.length) return -1; let minDist = Infinity, idx = -1; routeDirections.forEach((step, i) => { if (step.geometry) { try { const d = geometryEngine.distance(userPoint, step.geometry, "meters"); if (d < minDist) { minDist = d; idx = i; } } catch(e) {} } }); return idx; }
-
-        function speakInstructionIfNeeded(userPoint) {
-            if (!isTracking || !routeDirections.length) return;
-            const stepIdx = getCurrentStepIndex(userPoint);
-            if (stepIdx === -1) return;
-            const distToStep = getDistanceToRoute(userPoint);
-            if ((stepIdx > lastSpokenStepIndex || !spokenSteps.has(stepIdx)) && (distToStep < 45 || (stepIdx > lastSpokenStepIndex + 1))) {
-                const instruction = routeDirections[stepIdx].attributes.text;
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(instruction);
-                utterance.lang = 'ar-SA'; utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-                spokenSteps.add(stepIdx);
-                lastSpokenStepIndex = stepIdx;
-                document.getElementById("next-direction").innerText = instruction.length > 35 ? instruction.substring(0, 32) + "…" : instruction;
-                showError(`🔊 ${instruction}`);
-                if (activeRouteLine?.attributes) { const remainDist = Math.max(0, (activeRouteLine.attributes.Total_Kilometers * 1000 - distToStep) / 1000); document.getElementById("dist-val").innerText = remainDist.toFixed(1) + " كم"; }
-            }
-        }
-
-        function solveRoute() {
-            const params = new RouteParameters({ stops: new FeatureSet({ features: [startGraphic, endGraphic] }), returnDirections: true, directionsLanguage: "ar", returnRoutes: true });
-            route.solve("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World", params).then(data => {
-                if (!data.routeResults?.length) { showError("⚠️ لم يتم العثور على مسار"); return; }
-                const res = data.routeResults[0];
-                routeGeometry = res.route.geometry;
-                myView.graphics.forEach(g => { if (g.geometry?.type === "polyline") myView.graphics.remove(g); });
-                activeRouteLine = res.route;
-                myView.graphics.add(new Graphic({ geometry: routeGeometry, symbol: { type: "simple-line", color: [0, 140, 255, 0.9], width: 5 } }));
-                const distKm = res.route.attributes.Total_Kilometers;
-                const travelMins = Math.round(res.route.attributes.Total_TravelTime);
-                document.getElementById("dist-val").innerText = distKm.toFixed(1) + " كم";
-                document.getElementById("time-val").innerText = travelMins + " د";
-                document.getElementById("route-info-bar").style.display = "flex";
-                const stepsUl = document.getElementById("steps-ul");
-                stepsUl.innerHTML = "";
-                routeDirections = res.directions.features;
-                routeDirections.forEach((s, idx) => {
-                    let li = document.createElement("li");
-                    li.innerText = s.attributes.text;
-                    li.onclick = () => { const utterance = new SpeechSynthesisUtterance(s.attributes.text); utterance.lang = 'ar-SA'; window.speechSynthesis.speak(utterance); };
-                    stepsUl.appendChild(li);
-                });
-                document.getElementById("directions-list").style.display = "block";
-                document.getElementById("track-btn").disabled = false;
-                if (startGraphic?.geometry) { createLocationMarker(startGraphic.geometry); myView.goTo({ target: startGraphic.geometry, zoom: 15 }); }
-                showError("✅ المسار جاهز. اضغط بدء التتبع");
-            }).catch(err => { console.error(err); showError("❌ فشل حساب المسار"); });
-        }
-
-        function startTracking() {
-            if (!routeGeometry || !routeDirections.length) { showError("⚠️ يرجى تحديد مسار أولاً"); return false; }
-            if (isTracking) return;
-            isTracking = true;
-            document.getElementById("track-btn").classList.add("active");
-            document.getElementById("track-status").style.display = "block";
-            document.getElementById("track-btn").innerHTML = "⏹ إيقاف التتبع";
-            showError("🟢 بدء التتبع - سيتم نطق التعليمات");
-            lastSpokenStepIndex = -1; spokenSteps.clear();
-            if (routeDirections.length) { setTimeout(() => { const firstInst = routeDirections[0].attributes.text; const utterance = new SpeechSynthesisUtterance(`ابدأ الرحلة. ${firstInst}`); utterance.lang = 'ar-SA'; window.speechSynthesis.speak(utterance); spokenSteps.add(0); lastSpokenStepIndex = 0; document.getElementById("next-direction").innerText = firstInst.substring(0, 35); }, 800); }
-            if ("geolocation" in navigator) {
-                watchId = navigator.geolocation.watchPosition(
-                    (pos) => {
-                        const userPt = new Point({ longitude: pos.coords.longitude, latitude: pos.coords.latitude });
-                        createLocationMarker(userPt);
-                        speakInstructionIfNeeded(userPt);
-                        myView.goTo({ target: userPt, zoom: 16, duration: 900 });
-                        if (routeGeometry && endGraphic) {
-                            const distToEnd = geometryEngine.distance(userPt, endGraphic.geometry, "meters");
-                            if (distToEnd < 30) {
-                                window.speechSynthesis.cancel();
-                                const utter = new SpeechSynthesisUtterance("لقد وصلت إلى وجهتك. شكراً لاستخدام نظام الملاحة");
-                                utter.lang = 'ar-SA';
-                                window.speechSynthesis.speak(utter);
-                                showError("🏁 تم الوصول إلى الوجهة!");
-                                stopTracking();
-                            }
-                        }
-                    },
-                    (err) => { console.warn(err); showError("⚠️ تفعيل خدمات الموقع"); },
-                    { enableHighAccuracy: true, maximumAge: 4000, timeout: 10000 }
-                );
-            } else { showError("المتصفح لا يدعم تحديد الموقع"); return false; }
-            return true;
-        }
-
-        function stopTracking() {
-            if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; }
-            isTracking = false;
-            document.getElementById("track-btn").classList.remove("active");
-            document.getElementById("track-status").style.display = "none";
-            document.getElementById("track-btn").innerHTML = "▶ بدء التتبع";
-            window.speechSynthesis.cancel();
-            showError("⏹ توقف التتبع");
-        }
-
-        myView.on("click", e => {
-            if (!isManualMode) return;
-            if (!startGraphic) setPoint("start", e.mapPoint);
-            else { setPoint("end", e.mapPoint); isManualMode = false; document.getElementById("manual-btn").classList.remove("active"); }
+    function createLocationMarker(geometry) {
+        if (currentLocationGraphic) myView.graphics.remove(currentLocationGraphic);
+        currentLocationGraphic = new Graphic({
+            geometry,
+            symbol: { type: "simple-marker", color: [0,110,220,0.95], size: "22px", outline: { color: "white", width: 3 }, style: "circle" }
         });
+        myView.graphics.add(currentLocationGraphic);
+    }
 
-        document.getElementById("manual-btn").onclick = function() { if (isTracking) stopTracking(); isManualMode = !isManualMode; this.classList.toggle("active", isManualMode); };
-        document.getElementById("track-btn").onclick = () => { isTracking ? stopTracking() : startTracking(); };
-        document.getElementById("clear-btn").onclick = () => {
-            if (isTracking) stopTracking();
+    function getDistanceToRoute(userPoint) {
+        if (!routeGeometry) return Infinity;
+        try { return geometryEngine.distance(userPoint, routeGeometry, "meters"); } catch(e) { return Infinity; }
+    }
+
+    function getCurrentStepIndex(userPoint) {
+        if (!routeDirections.length) return -1;
+        let minDist = Infinity, idx = -1;
+        routeDirections.forEach((step, i) => {
+            if (step.geometry) {
+                try {
+                    const d = geometryEngine.distance(userPoint, step.geometry, "meters");
+                    if (d < minDist) { minDist = d; idx = i; }
+                } catch(e) {}
+            }
+        });
+        return idx;
+    }
+
+    function speakInstructionIfNeeded(userPoint) {
+        if (!isTracking || !routeDirections.length) return;
+        const stepIdx = getCurrentStepIndex(userPoint);
+        if (stepIdx === -1) return;
+        const distToStep = getDistanceToRoute(userPoint);
+        if ((stepIdx > lastSpokenStepIndex || !spokenSteps.has(stepIdx)) && (distToStep < 45 || stepIdx > lastSpokenStepIndex + 1)) {
+            const instruction = routeDirections[stepIdx].attributes.text;
             window.speechSynthesis.cancel();
-            myView.graphics.removeAll();
-            startGraphic = endGraphic = null;
-            activeRouteLine = routeGeometry = null;
-            routeDirections = [];
-            currentLocationGraphic = null;
-            lastSpokenStepIndex = -1; spokenSteps.clear();
-            sStart.clear(); sEnd.clear();
-            document.getElementById("route-info-bar").style.display = "none";
-            document.getElementById("directions-list").style.display = "none";
-            document.getElementById("track-btn").disabled = true;
-            document.getElementById("next-direction").innerText = "--";
-            showError("🗑 تم مسح المسار");
+            const utterance = new SpeechSynthesisUtterance(instruction);
+            utterance.lang = 'ar-SA'; utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+            spokenSteps.add(stepIdx);
+            lastSpokenStepIndex = stepIdx;
+            document.getElementById("next-direction").innerText = instruction.length > 30 ? instruction.substring(0, 28) + "…" : instruction;
+            showError(`🔊 ${instruction}`);
+        }
+    }
+
+    function solveRoute() {
+        const params = new RouteParameters({
+            stops: new FeatureSet({ features: [startGraphic, endGraphic] }),
+            returnDirections: true, directionsLanguage: "ar", returnRoutes: true
+        });
+        route.solve("https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World", params)
+        .then(data => {
+            if (!data.routeResults?.length) { showError("⚠️ لم يتم العثور على مسار"); return; }
+            const res = data.routeResults[0];
+            routeGeometry = res.route.geometry;
+            myView.graphics.forEach(g => { if (g.geometry?.type === "polyline") myView.graphics.remove(g); });
+            activeRouteLine = res.route;
+            myView.graphics.add(new Graphic({ geometry: routeGeometry, symbol: { type: "simple-line", color: [0,140,255,0.9], width: 5 } }));
+            const distKm = res.route.attributes.Total_Kilometers;
+            const travelMins = Math.round(res.route.attributes.Total_TravelTime);
+            document.getElementById("dist-val").innerText = distKm.toFixed(1) + " كم";
+            document.getElementById("time-val").innerText = travelMins + " د";
+            document.getElementById("route-info-bar").style.display = "flex";
+            const stepsUl = document.getElementById("steps-ul");
+            stepsUl.innerHTML = "";
+            routeDirections = res.directions.features;
+            routeDirections.forEach(s => {
+                const li = document.createElement("li");
+                li.innerText = s.attributes.text;
+                li.onclick = () => {
+                    const u = new SpeechSynthesisUtterance(s.attributes.text);
+                    u.lang = 'ar-SA'; window.speechSynthesis.speak(u);
+                };
+                stepsUl.appendChild(li);
+            });
+            document.getElementById("directions-list").style.display = "block";
+            document.getElementById("track-btn").disabled = false;
+            if (startGraphic?.geometry) { createLocationMarker(startGraphic.geometry); myView.goTo({ target: startGraphic.geometry, zoom: 15 }); }
+            showError("✅ المسار جاهز — اضغط بدء التتبع");
+        }).catch(err => { console.error(err); showError("❌ فشل حساب المسار"); });
+    }
+
+    function startTracking() {
+        if (!routeGeometry || !routeDirections.length) { showError("⚠️ يرجى تحديد مسار أولاً"); return false; }
+        if (isTracking) return;
+        isTracking = true;
+        document.getElementById("track-btn").classList.add("active");
+        document.getElementById("track-btn").innerHTML = "⏹ إيقاف التتبع";
+        document.getElementById("track-status").style.display = "block";
+        showError("🟢 بدأ التتبع");
+        lastSpokenStepIndex = -1; spokenSteps.clear();
+        if (routeDirections.length) {
+            setTimeout(() => {
+                const firstInst = routeDirections[0].attributes.text;
+                const u = new SpeechSynthesisUtterance(`ابدأ الرحلة. ${firstInst}`);
+                u.lang = 'ar-SA'; window.speechSynthesis.speak(u);
+                spokenSteps.add(0); lastSpokenStepIndex = 0;
+                document.getElementById("next-direction").innerText = firstInst.substring(0, 30);
+            }, 800);
+        }
+        if ("geolocation" in navigator) {
+            watchId = navigator.geolocation.watchPosition(
+                pos => {
+                    const userPt = new Point({ longitude: pos.coords.longitude, latitude: pos.coords.latitude });
+                    createLocationMarker(userPt);
+                    speakInstructionIfNeeded(userPt);
+                    myView.goTo({ target: userPt, zoom: 16, duration: 900 });
+                    if (routeGeometry && endGraphic) {
+                        const distToEnd = geometryEngine.distance(userPt, endGraphic.geometry, "meters");
+                        if (distToEnd < 30) {
+                            window.speechSynthesis.cancel();
+                            const u = new SpeechSynthesisUtterance("لقد وصلت إلى وجهتك. شكراً لاستخدام نظام الملاحة");
+                            u.lang = 'ar-SA'; window.speechSynthesis.speak(u);
+                            showError("🏁 وصلت إلى الوجهة!");
+                            stopTracking();
+                        }
+                    }
+                },
+                err => { console.warn(err); showError("⚠️ فعّل خدمات الموقع"); },
+                { enableHighAccuracy: true, maximumAge: 4000, timeout: 10000 }
+            );
+        } else { showError("المتصفح لا يدعم تحديد الموقع"); return false; }
+        return true;
+    }
+
+    function stopTracking() {
+        if (watchId) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+        isTracking = false;
+        document.getElementById("track-btn").classList.remove("active");
+        document.getElementById("track-btn").innerHTML = "▶ بدء التتبع";
+        document.getElementById("track-status").style.display = "none";
+        // تحديث زر الموبايل
+        const mTrk = document.getElementById("mobileTrackBtn");
+        if (mTrk) mTrk.classList.remove("active");
+        window.speechSynthesis.cancel();
+        showError("⏹ توقف التتبع");
+    }
+
+    function clearAll() {
+        if (isTracking) stopTracking();
+        window.speechSynthesis.cancel();
+        myView.graphics.removeAll();
+        startGraphic = endGraphic = null;
+        activeRouteLine = routeGeometry = null;
+        routeDirections = [];
+        currentLocationGraphic = null;
+        lastSpokenStepIndex = -1; spokenSteps.clear();
+        document.getElementById("route-info-bar").style.display = "none";
+        document.getElementById("directions-list").style.display = "none";
+        document.getElementById("track-btn").disabled = true;
+        document.getElementById("next-direction").innerText = "--";
+        sStart.clear(); sEnd.clear();
+        showError("🗑 تم مسح المسار");
+    }
+
+    // أحداث أزرار الديسكتوب
+    myView.on("click", e => {
+        if (!isManualMode) return;
+        if (!startGraphic) setPoint("start", e.mapPoint);
+        else { setPoint("end", e.mapPoint); isManualMode = false; document.getElementById("manual-btn").classList.remove("active"); const mb = document.getElementById("mobileManualBtn"); if (mb) mb.classList.remove("active"); }
+    });
+
+    document.getElementById("manual-btn").onclick = function() {
+        if (isTracking) stopTracking();
+        isManualMode = !isManualMode;
+        this.classList.toggle("active", isManualMode);
+        showError(isManualMode ? "📍 اضغط على الخريطة لتحديد البداية" : "");
+    };
+
+    document.getElementById("track-btn").onclick = () => { isTracking ? stopTracking() : startTracking(); };
+    document.getElementById("clear-btn").onclick  = clearAll;
+
+    // معرض الخرائط
+    const bgWidget = new BasemapGallery({ view: myView });
+    let bgVisible = false;
+    document.getElementById("gallary").onclick = () => {
+        if (!bgVisible) { myView.ui.add(bgWidget, "top-right"); bgVisible = true; }
+        else            { myView.ui.remove(bgWidget); bgVisible = false; }
+    };
+
+    // البحث في الطبقات
+    document.getElementById("toggle-layer-search").onclick = () => {
+        const el = document.getElementById("layer-ui");
+        el.style.display = el.style.display === "block" ? "none" : "block";
+    };
+
+    // قائمة الطبقات
+    new LayerList({ view: myView, container: "layerListDiv" });
+    document.getElementById("toggle-layer-list").onclick = () => {
+        const c = document.getElementById("layer-list-container");
+        c.style.display = c.style.display === "block" ? "none" : "block";
+    };
+
+    // المفضلات (ديسكتوب)
+    function loadFavorites() {
+        const ul = document.getElementById("fav-list");
+        ul.innerHTML = "";
+        const favorites = JSON.parse(localStorage.getItem("app_favorites") || "[]");
+        favorites.forEach((fav, index) => {
+            const li = document.createElement("li");
+            li.className = "fav-item";
+            li.innerHTML = `<span class="fav-name">⭐ ${fav.name}</span><button class="fav-delete" title="حذف">✖</button>`;
+            li.querySelector(".fav-name").onclick = () => {
+                const pt = new Point({ longitude: fav.coords.lon, latitude: fav.coords.lat });
+                setPoint("end", pt); myView.goTo({ target: pt, zoom: 14 });
+            };
+            li.querySelector(".fav-delete").onclick = e => {
+                e.stopPropagation();
+                const favs = JSON.parse(localStorage.getItem("app_favorites") || "[]");
+                favs.splice(index, 1);
+                localStorage.setItem("app_favorites", JSON.stringify(favs));
+                loadFavorites();
+            };
+            ul.appendChild(li);
+        });
+    }
+
+    document.getElementById("add-fav-btn").onclick = () => {
+        if (!endGraphic) { showError("⚠️ حدد وجهة أولاً"); return; }
+        const name = document.getElementById("fav-name").value.trim();
+        if (!name) { showError("⚠️ أدخل اسم المكان"); return; }
+        const favorites = JSON.parse(localStorage.getItem("app_favorites") || "[]");
+        favorites.push({ name, coords: { lon: endGraphic.geometry.longitude, lat: endGraphic.geometry.latitude } });
+        localStorage.setItem("app_favorites", JSON.stringify(favorites));
+        document.getElementById("fav-name").value = "";
+        loadFavorites();
+        showError(`✅ تم حفظ "${name}"`);
+    };
+
+    loadFavorites();
+
+    // نافذة المساعدة
+    const modal = document.getElementById("info-modal");
+    document.getElementById("info-btn").onclick = () => modal.style.display = "flex";
+    document.querySelector(".close-modal").onclick = () => modal.style.display = "none";
+    window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+
+    // ========== القائمة العائمة للموبايل ==========
+    const isMobile = () => window.innerWidth <= 768;
+
+    function buildMobileMenu() {
+        if (!isMobile()) return;
+
+        // إنشاء القائمة العائمة الرئيسية
+        const floatMenu = document.createElement("div");
+        floatMenu.className = "mobile-float-menu";
+        floatMenu.id = "mobileFloatMenu";
+        floatMenu.innerHTML = `
+            <div class="mob-btn" id="mobileToggleBtn" title="إظهار/إخفاء الأيقونات">👁</div>
+            <div class="mob-btn" id="mobileStartBtn" title="نقطة البداية">📍</div>
+            <div class="mob-btn" id="mobileEndBtn"   title="الوجهة">🎯</div>
+            <div class="mob-btn" id="mobileTrackBtn" title="بدء التتبع">▶</div>
+            <div class="mob-btn" id="mobileClearBtn" title="مسح الكل">🗑</div>
+            <div class="mob-btn" id="mobileFavBtn"   title="المفضلات">⭐</div>
+        `;
+        document.body.appendChild(floatMenu);
+
+        // إنشاء القائمة الثانوية (تغيير الخريطة + تحديد يدوي)
+        const secondMenu = document.createElement("div");
+        secondMenu.className = "mobile-secondary-menu hidden-menu";
+        secondMenu.id = "mobileSecondMenu";
+        secondMenu.innerHTML = `
+            <div class="mob-btn" id="mobileManualBtn" title="تحديد يدوي">✏️</div>
+            <div class="mob-btn" id="mobileGalleryBtn" title="تغيير الخريطة">🗺</div>
+        `;
+        document.body.appendChild(secondMenu);
+
+        // النافذة المنبثقة
+        const popup = document.createElement("div");
+        popup.className = "mobile-popup";
+        popup.id = "mobilePopup";
+        popup.innerHTML = `
+            <div class="popup-title" id="popupTitle">البحث</div>
+            <div id="mobileSearchStart"></div>
+            <div id="mobileSearchEnd"></div>
+            <div id="mobileFavList" class="fav-list-mobile"></div>
+            <button id="closePopup">إغلاق</button>
+        `;
+        document.body.appendChild(popup);
+
+        // نقل search widgets للبوب اب
+        const mss = document.getElementById("mobileSearchStart");
+        const mse = document.getElementById("mobileSearchEnd");
+        if (mss) mss.appendChild(sStart.container);
+        if (mse) mse.appendChild(sEnd.container);
+
+        function openPopup(mode) {
+            const title = document.getElementById("popupTitle");
+            const ms = document.getElementById("mobileSearchStart");
+            const me = document.getElementById("mobileSearchEnd");
+            const mf = document.getElementById("mobileFavList");
+            ms.style.display = "none";
+            me.style.display = "none";
+            mf.style.display = "none";
+            if (mode === "start") { ms.style.display = "block"; title.innerText = "📍 نقطة البداية"; setTimeout(() => { const inp = ms.querySelector(".esri-search__input"); if (inp) inp.focus(); }, 150); }
+            else if (mode === "end") { me.style.display = "block"; title.innerText = "🎯 الوجهة"; setTimeout(() => { const inp = me.querySelector(".esri-search__input"); if (inp) inp.focus(); }, 150); }
+            else if (mode === "fav") { mf.style.display = "block"; title.innerText = "⭐ المفضلات"; loadMobileFavs(); }
+            popup.classList.add("show");
+        }
+
+        document.getElementById("mobileStartBtn").onclick = () => openPopup("start");
+        document.getElementById("mobileEndBtn").onclick   = () => openPopup("end");
+        document.getElementById("mobileFavBtn").onclick   = () => openPopup("fav");
+        document.getElementById("closePopup").onclick     = () => popup.classList.remove("show");
+
+        document.getElementById("mobileTrackBtn").onclick = () => {
+            const btn = document.getElementById("mobileTrackBtn");
+            if (isTracking) { stopTracking(); btn.classList.remove("active"); btn.innerText = "▶"; }
+            else {
+                const started = startTracking();
+                if (started !== false) { btn.classList.add("active"); btn.innerText = "⏹"; }
+            }
         };
 
-        const bgWidget = new BasemapGallery({ view: myView });
-        let bgVisible = false;
-        document.getElementById("gallary").onclick = () => { if (!bgVisible) { myView.ui.add(bgWidget, "top-right"); bgVisible = true; } else { myView.ui.remove(bgWidget); bgVisible = false; } };
-        document.getElementById("toggle-layer-search").onclick = () => { const el = document.getElementById("layer-ui"); el.style.display = el.style.display === "block" ? "none" : "block"; };
-        const layerList = new LayerList({ view: myView, container: "layerListDiv" });
-        document.getElementById("toggle-layer-list").onclick = () => { const c = document.getElementById("layer-list-container"); c.style.display = c.style.display === "block" ? "none" : "block"; };
+        document.getElementById("mobileClearBtn").onclick = () => {
+            clearAll();
+            const btn = document.getElementById("mobileTrackBtn");
+            if (btn) { btn.classList.remove("active"); btn.innerText = "▶"; }
+            popup.classList.remove("show");
+        };
 
-        // المفضلات
-        const favInput = document.getElementById("fav-name");
-        const addFavBtn = document.getElementById("add-fav-btn");
-        const favListUl = document.getElementById("fav-list");
+        // زر تحديد يدوي للموبايل
+        document.getElementById("mobileManualBtn").onclick = function() {
+            if (isTracking) stopTracking();
+            isManualMode = !isManualMode;
+            this.classList.toggle("active", isManualMode);
+            showError(isManualMode ? "📍 اضغط على الخريطة لتحديد البداية" : "✅ تم إلغاء الوضع اليدوي");
+        };
 
-        function loadFavorites() {
-            favListUl.innerHTML = "";
+        // زر تغيير الخريطة للموبايل
+        const bgWidgetMobile = new BasemapGallery({ view: myView });
+        let bgVisibleMobile = false;
+        document.getElementById("mobileGalleryBtn").onclick = () => {
+            if (!bgVisibleMobile) {
+                myView.ui.add(bgWidgetMobile, "top-right");
+                bgVisibleMobile = true;
+                document.getElementById("mobileGalleryBtn").style.background = "linear-gradient(135deg, #e67e22, #d35400)";
+            } else {
+                myView.ui.remove(bgWidgetMobile);
+                bgVisibleMobile = false;
+                document.getElementById("mobileGalleryBtn").style.background = "linear-gradient(135deg, #0984e3, #74b9ff)";
+            }
+        };
+
+        // زر إظهار/إخفاء كل الأيقونات
+        let iconsVisible = true;
+        document.getElementById("mobileToggleBtn").onclick = function() {
+            iconsVisible = !iconsVisible;
+            const secondM = document.getElementById("mobileSecondMenu");
+            const mainBtns = floatMenu.querySelectorAll(".mob-btn:not(#mobileToggleBtn)");
+            if (iconsVisible) {
+                mainBtns.forEach(b => { b.style.display = "flex"; });
+                secondM.classList.remove("hidden-menu");
+                this.innerText = "👁";
+                this.title = "إخفاء الأيقونات";
+            } else {
+                mainBtns.forEach(b => { b.style.display = "none"; });
+                secondM.classList.add("hidden-menu");
+                this.innerText = "🙈";
+                this.title = "إظهار الأيقونات";
+            }
+        };
+
+        // تبديل ظهور القائمة الثانوية عند أول ضغط على الزر الرئيسي
+        // القائمة الثانوية تظهر تلقائياً بعد بناء القائمة
+        setTimeout(() => {
+            document.getElementById("mobileSecondMenu").classList.remove("hidden-menu");
+        }, 400);
+
+        function loadMobileFavs() {
+            const favList = document.getElementById("mobileFavList");
             const favorites = JSON.parse(localStorage.getItem("app_favorites") || "[]");
-            favorites.forEach((fav, index) => {
-                const li = document.createElement("li");
-                li.className = "fav-item";
-                li.innerHTML = `<span class="fav-name">⭐ ${fav.name}</span><button class="fav-delete" data-index="${index}">✖</button>`;
-                li.querySelector(".fav-name").onclick = () => { const pt = new Point({ longitude: fav.coords.lon, latitude: fav.coords.lat }); setPoint("end", pt); myView.goTo({ target: pt, zoom: 14 }); };
-                li.querySelector(".fav-delete").onclick = (e) => { e.stopPropagation(); const favs = JSON.parse(localStorage.getItem("app_favorites") || "[]"); favs.splice(index, 1); localStorage.setItem("app_favorites", JSON.stringify(favs)); loadFavorites(); };
-                favListUl.appendChild(li);
+            favList.innerHTML = "";
+            if (!favorites.length) {
+                favList.innerHTML = '<p style="color:rgba(255,255,255,0.5);text-align:center;font-size:13px;padding:10px;">لا توجد مفضلات بعد</p>';
+                return;
+            }
+            favorites.forEach((fav, idx) => {
+                const div = document.createElement("div");
+                div.className = "fav-item-mobile";
+                div.innerHTML = `<span>📍 ${fav.name}</span><span class="del-fav" data-idx="${idx}">✖</span>`;
+                div.querySelector("span:first-child").onclick = () => {
+                    const pt = new Point({ longitude: fav.coords.lon, latitude: fav.coords.lat });
+                    setPoint("end", pt); myView.goTo({ target: pt, zoom: 14 });
+                    popup.classList.remove("show");
+                };
+                div.querySelector(".del-fav").onclick = e => {
+                    e.stopPropagation();
+                    const favs = JSON.parse(localStorage.getItem("app_favorites") || "[]");
+                    favs.splice(idx, 1);
+                    localStorage.setItem("app_favorites", JSON.stringify(favs));
+                    loadMobileFavs();
+                };
+                favList.appendChild(div);
             });
         }
+    }
 
-        addFavBtn.onclick = () => {
-            if (!endGraphic) { showError("⚠️ حدد وجهة أولاً"); return; }
-            const name = favInput.value.trim();
-            if (!name) { showError("⚠️ أدخل اسم المكان"); return; }
-            const favorites = JSON.parse(localStorage.getItem("app_favorites") || "[]");
-            favorites.push({ name, coords: { lon: endGraphic.geometry.longitude, lat: endGraphic.geometry.latitude } });
-            localStorage.setItem("app_favorites", JSON.stringify(favorites));
-            favInput.value = "";
-            loadFavorites();
-            showError(`✅ تم حفظ ${name}`);
-        };
-        loadFavorites();
+    // بناء قائمة الموبايل بعد تهيئة الخريطة
+    myView.when(() => { buildMobileMenu(); });
 
-        const modal = document.getElementById("info-modal");
-        document.getElementById("info-btn").onclick = () => modal.style.display = "flex";
-        document.querySelector(".close-modal").onclick = () => modal.style.display = "none";
-        window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
-    });
+}); // end require
 </script>
 </body>
 </html>
